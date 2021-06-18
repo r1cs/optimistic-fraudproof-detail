@@ -39,7 +39,7 @@ func generateMerkleRoot(leaves [][32]byte)[32]byte {
 			c = append(c, rightSibling[:]...)
 			leaves[i] = keccack256(c)
 		}
-		//如果不被2整除，则多出一个元素，将其进行进行复制并元素暗
+		//如果不被2整除，则多出一个元素，使用默认的hash值
 		if isOdd {
 			leftSibling = leaves[rowsize-1]
 			rightSibling = defaultHash
@@ -81,7 +81,7 @@ func generateMerkleRoot(leaves [][32]byte)[32]byte {
 
 ![verifyMerkle](verifyMerkle.png)
 
-所示所以只需提供hash2,hash1和leaf2即leaf2所在位置即可，而位置则代表了此叶子结点在各个层进行运算所处的位置，如leaf2为`10`,所以在由下往上第一层的运算为右边，由下往上第二层的运算位置为左边。
+所示所以只需提供hash2,hash1和leaf2即leaf2所在位置即可，而位置则代表了此叶子结点在各个层进行运算所处的位置，如leaf2为二进制`10`,所以在由下往上第一层的运算为左边，由下往上第二层的运算位置为右边。
 
 其代码逻辑如下:
 
